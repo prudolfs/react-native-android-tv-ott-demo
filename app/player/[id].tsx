@@ -1,36 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react'
+import Video, { VideoRef } from 'react-native-video'
 import { View, StyleSheet, BackHandler, Text, Pressable } from 'react-native'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import Video, { VideoRef } from 'react-native-video'
-import { catalogData } from '@/data/catalog'
 import LoadingIndicator from '@/components/LoadingIndicator'
 import ErrorMessage from '@/components/ErrorMessage'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCatalog } from '@/services/api'
 import type { VideoItem } from '@/types'
 
 export default function PlayerScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const router = useRouter()
   const videoRef = useRef<VideoRef>(null)
-  const [video, setVideo] = useState<VideoItem | null>(null)
-  const [dataLoading, setDataLoading] = useState(true)
   const [videoLoading, setVideoLoading] = useState(true)
-  const [error, setError] = useState(false)
   const [playerError, setPlayerError] = useState(false)
 
-  useEffect(() => {
-    try {
-      const foundVideo = catalogData.items.find((item) => item.id === id)
-      if (foundVideo) {
-        setVideo(foundVideo)
-      } else {
-        setError(true)
-      }
-    } catch (err) {
-      setError(true)
-    } finally {
-      setDataLoading(false)
-    }
+  const {
+    data,
+    isLoading: dataLoading,
+    error,
+  } = useQuery({
+    queryKey: ['catalog'],
+    queryFn: fetchCatalog,
+  })
 
+  useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
@@ -40,7 +34,7 @@ export default function PlayerScreen() {
     )
 
     return () => backHandler.remove()
-  }, [id])
+  }, [])
 
   const handleBackPress = () => {
     router.back()
@@ -53,6 +47,8 @@ export default function PlayerScreen() {
       </View>
     )
   }
+
+  const video = data?.items.find((item) => item.id === id)
 
   if (error || !video) {
     return (
@@ -84,7 +80,7 @@ export default function PlayerScreen() {
     <View style={styles.container}>
       <Video
         ref={videoRef}
-        source={{ uri: video?.streamUrl }}
+        source={{ uri: video.streamUrl }}
         style={styles.videoPlayer}
         resizeMode="contain"
         controls={Boolean(!videoLoading && true)}

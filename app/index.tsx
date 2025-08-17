@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   View,
   Text,
@@ -8,32 +8,21 @@ import {
   Pressable,
 } from 'react-native'
 import { useRouter } from 'expo-router'
-import { catalogData } from '@/data/catalog'
+import { useQuery } from '@tanstack/react-query'
 import LoadingIndicator from '@/components/LoadingIndicator'
 import ErrorMessage from '@/components/ErrorMessage'
 import type { VideoItem } from '@/types'
+import { fetchCatalog } from '@/services/api'
 
 export default function HomeScreen() {
   const router = useRouter()
-  const [videos, setVideos] = useState<VideoItem[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        setVideos(catalogData.items)
-        setLoading(false)
-      } catch (err) {
-        setError(true)
-        setLoading(false)
-      }
-    }, 1000)
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['catalog'],
+    queryFn: fetchCatalog,
+  })
 
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={styles.container}>
         <LoadingIndicator />
@@ -41,7 +30,7 @@ export default function HomeScreen() {
     )
   }
 
-  if (error) {
+  if (error || !data) {
     return (
       <View style={styles.container}>
         <ErrorMessage message="Failed to load video catalog" />
@@ -63,7 +52,7 @@ export default function HomeScreen() {
         focused && styles.focusedItem,
       ]}
       onPress={() => handleVideoSelect(item.id)}
-      hasTVPreferredFocus={item.id === videos[0]?.id}
+      hasTVPreferredFocus={item.id === data?.items[0]?.id}
     >
       <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
       <Text style={styles.title} numberOfLines={2}>
@@ -76,7 +65,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.headerText}>Video Catalog</Text>
       <FlatList
-        data={videos}
+        data={data.items}
         renderItem={renderVideoItem}
         keyExtractor={(item) => item.id}
         numColumns={3}

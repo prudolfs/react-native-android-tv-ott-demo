@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import { catalogData } from '@/data/catalog'
-import { VideoItem } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 import LoadingIndicator from '@/components/LoadingIndicator'
 import ErrorMessage from '@/components/ErrorMessage'
+import { fetchCatalog } from '@/services/api'
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const router = useRouter()
-  const [video, setVideo] = useState<VideoItem | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
-  useEffect(() => {
-    try {
-      const foundVideo = catalogData.items.find((item) => item.id === id)
-      if (foundVideo) {
-        setVideo(foundVideo)
-      } else {
-        setError(true)
-      }
-    } catch (err) {
-      setError(true)
-    } finally {
-      setLoading(false)
-    }
-  }, [id])
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['catalog'],
+    queryFn: fetchCatalog,
+  })
 
-  if (loading) {
+  if (isLoading) {
     return <LoadingIndicator />
   }
+
+  const video = data?.items.find((item) => item.id === id)
 
   if (error || !video) {
     return <ErrorMessage message="Video details not found" />
