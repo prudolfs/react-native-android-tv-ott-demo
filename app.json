@@ -24,12 +24,14 @@
       "edgeToEdgeEnabled": true,
       "splash": {
         "image": "./assets/images/splash.png"
-      }
+      },
+      "package": "com.anonymous.reactnativeandroidtvottdemo"
     },
     "ios": {
       "splash": {
         "image": "./assets/images/splash.png"
-      }
+      },
+      "bundleIdentifier": "com.anonymous.reactnativeandroidtvottdemo"
     },
     "web": {
       "bundler": "metro",
@@ -40,7 +42,7 @@
       "typedRoutes": true
     },
     "newArchEnabled": true,
-    "name": "react-native-android-tv-ott-demo",
+    "name": "React Native Android TV OTT Demo",
     "slug": "react-native-android-tv-ott-demo"
   }
 }

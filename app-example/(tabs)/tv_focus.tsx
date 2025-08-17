@@ -1,16 +1,16 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Platform } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import { StyleSheet, Platform } from 'react-native'
 
-import { Collapsible } from '@/components/Collapsible';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { EventHandlingDemo } from '@/components/EventHandlingDemo';
-import { useScale } from '@/hooks/useScale';
+import { Collapsible } from '@/components/Collapsible'
+import ParallaxScrollView from '@/components/ParallaxScrollView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { EventHandlingDemo } from '@/components/EventHandlingDemo'
+import { useScale } from '@/hooks/useScale'
 
 export default function FocusDemoScreen() {
-  const styles = useFocusDemoScreenStyles();
-  const scale = useScale();
+  const styles = useFocusDemoScreenStyles()
+  const scale = useScale()
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -59,11 +59,11 @@ export default function FocusDemoScreen() {
       </Collapsible>
       <EventHandlingDemo />
     </ParallaxScrollView>
-  );
+  )
 }
 
 const useFocusDemoScreenStyles = function () {
-  const scale = useScale();
+  const scale = useScale()
   return StyleSheet.create({
     headerImage: {
       color: '#808080',
@@ -75,5 +75,5 @@ const useFocusDemoScreenStyles = function () {
       flexDirection: 'row',
       gap: 8 * scale,
     },
-  });
-};
+  })
+}

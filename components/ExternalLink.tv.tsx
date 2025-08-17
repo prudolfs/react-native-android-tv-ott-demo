@@ -1,8 +1,8 @@
-import { Link } from 'expo-router';
-import { type ComponentProps } from 'react';
-import { Pressable, Linking } from 'react-native';
+import { Link } from 'expo-router'
+import { type ComponentProps } from 'react'
+import { Pressable, Linking } from 'react-native'
 
-type Props = Omit<ComponentProps<typeof Link>, 'href'> & { href: string };
+type Props = Omit<ComponentProps<typeof Link>, 'href'> & { href: string }
 
 export function ExternalLink({ href, ...rest }: Props) {
   // On TV, use a Pressable (which handles focus navigation) instead of the Link component
@@ -17,5 +17,5 @@ export function ExternalLink({ href, ...rest }: Props) {
     >
       {rest.children}
     </Pressable>
-  );
+  )
 }

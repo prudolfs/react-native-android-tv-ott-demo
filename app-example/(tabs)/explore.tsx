@@ -1,16 +1,16 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import { StyleSheet, Image, Platform } from 'react-native'
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { useScale } from '@/hooks/useScale';
+import { Collapsible } from '@/components/Collapsible'
+import { ExternalLink } from '@/components/ExternalLink'
+import ParallaxScrollView from '@/components/ParallaxScrollView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { useScale } from '@/hooks/useScale'
 
 export default function ExploreScreen() {
-  const styles = useExploreScreenStyles();
-  const scale = useScale();
+  const styles = useExploreScreenStyles()
+  const scale = useScale()
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -119,11 +119,11 @@ export default function ExploreScreen() {
         })}
       </Collapsible>
     </ParallaxScrollView>
-  );
+  )
 }
 
 const useExploreScreenStyles = function () {
-  const scale = useScale();
+  const scale = useScale()
   return StyleSheet.create({
     headerImage: {
       color: '#808080',
@@ -135,5 +135,5 @@ const useExploreScreenStyles = function () {
       flexDirection: 'row',
       gap: 8 * scale,
     },
-  });
-};
+  })
+}

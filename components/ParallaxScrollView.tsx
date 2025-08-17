@@ -1,32 +1,32 @@
-import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
+import type { PropsWithChildren, ReactElement } from 'react'
+import { StyleSheet, useColorScheme } from 'react-native'
 import Animated, {
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
   useScrollViewOffset,
-} from 'react-native-reanimated';
+} from 'react-native-reanimated'
 
-import { ThemedView } from '@/components/ThemedView';
-import { useScale } from '@/hooks/useScale';
+import { ThemedView } from '@/components/ThemedView'
+import { useScale } from '@/hooks/useScale'
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
-  headerBackgroundColor: { dark: string; light: string };
-}>;
+  headerImage: ReactElement
+  headerBackgroundColor: { dark: string; light: string }
+}>
 
 export default function ParallaxScrollView({
   children,
   headerImage,
   headerBackgroundColor,
 }: Props) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const scrollRef = useAnimatedRef<Animated.ScrollView>();
-  const scrollOffset = useScrollViewOffset(scrollRef);
-  const scale = useScale();
-  const styles = useParallaxScrollViewStyles();
+  const colorScheme = useColorScheme() ?? 'light'
+  const scrollRef = useAnimatedRef<Animated.ScrollView>()
+  const scrollOffset = useScrollViewOffset(scrollRef)
+  const scale = useScale()
+  const styles = useParallaxScrollViewStyles()
 
-  const HEADER_HEIGHT = 125 * scale;
+  const HEADER_HEIGHT = 125 * scale
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -46,8 +46,8 @@ export default function ParallaxScrollView({
           ),
         },
       ],
-    };
-  });
+    }
+  })
 
   return (
     <ThemedView style={styles.container}>
@@ -64,11 +64,11 @@ export default function ParallaxScrollView({
         <ThemedView style={styles.content}>{children}</ThemedView>
       </Animated.ScrollView>
     </ThemedView>
-  );
+  )
 }
 
 const useParallaxScrollViewStyles = function () {
-  const scale = useScale();
+  const scale = useScale()
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -83,5 +83,5 @@ const useParallaxScrollViewStyles = function () {
       gap: 16 * scale,
       overflow: 'hidden',
     },
-  });
-};
+  })
+}

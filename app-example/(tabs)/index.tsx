@@ -1,13 +1,13 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform } from 'react-native'
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { useScale } from '@/hooks/useScale';
+import { HelloWave } from '@/components/HelloWave'
+import ParallaxScrollView from '@/components/ParallaxScrollView'
+import { ThemedText } from '@/components/ThemedText'
+import { ThemedView } from '@/components/ThemedView'
+import { useScale } from '@/hooks/useScale'
 
 export default function HomeScreen() {
-  const styles = useHomeScreenStyles();
+  const styles = useHomeScreenStyles()
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -53,11 +53,11 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
-  );
+  )
 }
 
 const useHomeScreenStyles = function () {
-  const scale = useScale();
+  const scale = useScale()
   return StyleSheet.create({
     titleContainer: {
       flexDirection: 'row',
@@ -75,5 +75,5 @@ const useHomeScreenStyles = function () {
       left: 0,
       position: 'absolute',
     },
-  });
-};
+  })
+}

@@ -2,13 +2,13 @@
  * Below are text styles used in the app, primarily in the ThemedText component.
  */
 
-import { TextStyle } from 'react-native';
+import { TextStyle } from 'react-native'
 
 export const textStyles = function (
   scale: number,
   linkColor: string,
 ): {
-  [key: string]: TextStyle & { fontSize: number; lineHeight: number };
+  [key: string]: TextStyle & { fontSize: number; lineHeight: number }
 } {
   return {
     default: {
@@ -35,5 +35,5 @@ export const textStyles = function (
       fontSize: 16 * scale,
       color: linkColor,
     },
-  };
-};
+  }
+}
