@@ -1,4 +1,4 @@
-type VideoItem = {
+export type VideoItem = {
   id: string
   title: string
   description: string
@@ -7,8 +7,6 @@ type VideoItem = {
   duration: number
 }
 
-type CatalogData = {
+export type CatalogData = {
   items: VideoItem[]
 }
-
-export type { VideoItem, CatalogData }

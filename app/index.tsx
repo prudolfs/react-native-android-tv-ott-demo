@@ -34,11 +34,19 @@ export default function HomeScreen() {
   }, [])
 
   if (loading) {
-    return <LoadingIndicator />
+    return (
+      <View style={styles.container}>
+        <LoadingIndicator />
+      </View>
+    )
   }
 
   if (error) {
-    return <ErrorMessage message="Failed to load video catalog" />
+    return (
+      <View style={styles.container}>
+        <ErrorMessage message="Failed to load video catalog" />
+      </View>
+    )
   }
 
   const handleVideoSelect = (id: string) => {
