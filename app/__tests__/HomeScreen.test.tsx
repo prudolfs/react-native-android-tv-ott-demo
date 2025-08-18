@@ -1,7 +1,7 @@
 import React from 'react'
 import { waitFor } from '@testing-library/react-native'
-import HomeScreen from '../index'
-import { renderWithQueryClient } from './test-utils'
+import HomeScreen from '@/app/index'
+import { renderWithQueryClient } from '@/utils/test-utils'
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({

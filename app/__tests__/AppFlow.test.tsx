@@ -1,18 +1,20 @@
 import React from 'react'
 import { fireEvent, waitFor } from '@testing-library/react-native'
-import HomeScreen from '../index'
-import DetailsScreen from '../details/[id]'
-import PlayerScreen from '../player/[id]'
-import { renderWithQueryClient } from './test-utils'
+import HomeScreen from '@/app/index'
+import DetailsScreen from '@/app/details/[id]'
+import PlayerScreen from '@/app/player/[id]'
+import { renderWithQueryClient } from '@/utils/test-utils'
 
-type RouterParams = {
-  pathname?: string;
-  params?: Record<string, string>;
-} | string;
+type RouterParams =
+  | {
+      pathname?: string
+      params?: Record<string, string>
+    }
+  | string
 
-const mockPush = jest.fn<void, [RouterParams]>();
-const mockNavigate = jest.fn<void, [RouterParams]>();
-const mockBack = jest.fn<void, []>();
+const mockPush = jest.fn<void, [RouterParams]>()
+const mockNavigate = jest.fn<void, [RouterParams]>()
+const mockBack = jest.fn<void, []>()
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({
