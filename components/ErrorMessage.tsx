@@ -9,7 +9,7 @@ export default function ErrorMessage({
   message = 'Something went wrong. Please try again.',
 }: ErrorMessageProps) {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="error-message">
       <Text style={styles.text}>{message}</Text>
     </View>
   )

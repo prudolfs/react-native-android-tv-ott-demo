@@ -6,7 +6,6 @@ import LoadingIndicator from '@/components/LoadingIndicator'
 import ErrorMessage from '@/components/ErrorMessage'
 import { useQuery } from '@tanstack/react-query'
 import { fetchCatalog } from '@/services/api'
-import type { VideoItem } from '@/types'
 
 export default function PlayerScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -77,7 +76,7 @@ export default function PlayerScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="player-screen">
       <Video
         ref={videoRef}
         source={{ uri: video.streamUrl }}

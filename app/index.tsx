@@ -47,6 +47,7 @@ export default function HomeScreen() {
 
   const renderVideoItem = ({ item }: { item: VideoItem }) => (
     <Pressable
+      testID={`video-item-${item.id}`}
       style={({ focused }) => [
         styles.itemContainer,
         focused && styles.focusedItem,

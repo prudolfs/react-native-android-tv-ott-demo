@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useQuery } from '@tanstack/react-query'
 import LoadingIndicator from '@/components/LoadingIndicator'
 import ErrorMessage from '@/components/ErrorMessage'
+import { formatDuration } from '@/utils/formatDuration'
 import { fetchCatalog } from '@/services/api'
 
 export default function DetailsScreen() {
@@ -38,14 +39,8 @@ export default function DetailsScreen() {
     router.back()
   }
 
-  const formatDuration = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60)
-    const remainingSeconds = seconds % 60
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
-  }
-
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="details-screen">
       <Pressable
         style={({ focused }) => [
           styles.backButton,
