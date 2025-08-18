@@ -1,13 +1,15 @@
 import React from 'react'
 import { waitFor } from '@testing-library/react-native'
+import * as api from '@/services/api';
+import { catalogData } from '@/data/catalog';
+
+jest.mock('@/services/api');
+const fetchCatalogMock = api.fetchCatalog as jest.Mock;
+fetchCatalogMock.mockResolvedValue(catalogData);
+
 import HomeScreen from '@/app/index'
 import { renderWithQueryClient } from '@/utils/test-utils'
 
-jest.mock('expo-router', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-  }),
-}))
 
 test('HomeScreen displays loading indicator initially', () => {
   const { getByTestId } = renderWithQueryClient(<HomeScreen />)
@@ -23,26 +25,18 @@ test('HomeScreen displays video catalog after loading', async () => {
 })
 
 test('HomeScreen displays correct number of video items', async () => {
-  const { getAllByTestId } = renderWithQueryClient(<HomeScreen />)
+  const { findAllByTestId } = renderWithQueryClient(<HomeScreen />);
 
-  await waitFor(() => {
-    const videoItems = getAllByTestId('video-item')
-    expect(videoItems.length).toBe(6)
-  })
-})
+  const videoItems = await findAllByTestId('video-item', {});
+  expect(videoItems.length).toBe(catalogData.items.length);
+});
 
 test('HomeScreen handles empty data gracefully', async () => {
-  // Mock the catalog data to be empty
-  jest.mock('../data/catalog', () => ({
-    catalogData: { items: [] },
-  }))
+  (api.fetchCatalog as jest.Mock).mockResolvedValueOnce({ items: [] })
 
   const { getByText } = renderWithQueryClient(<HomeScreen />)
 
   await waitFor(() => {
     expect(getByText('No videos available')).toBeTruthy()
   })
-
-  // Reset mock to not affect other tests
-  jest.resetModules()
 })

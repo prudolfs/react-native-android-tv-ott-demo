@@ -78,6 +78,7 @@ export default function PlayerScreen() {
   return (
     <View style={styles.container} testID="player-screen">
       <Video
+        testID="video-player"
         ref={videoRef}
         source={{ uri: video.streamUrl }}
         style={styles.videoPlayer}

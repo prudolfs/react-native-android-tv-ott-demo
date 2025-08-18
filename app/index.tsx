@@ -38,6 +38,14 @@ export default function HomeScreen() {
     )
   }
 
+  if (data.items.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.headerText}>No videos available</Text>
+      </View>
+    )
+  }
+
   const handleVideoSelect = (id: string) => {
     router.push({
       pathname: '/details/[id]',
@@ -47,7 +55,7 @@ export default function HomeScreen() {
 
   const renderVideoItem = ({ item }: { item: VideoItem }) => (
     <Pressable
-      testID={`video-item-${item.id}`}
+      testID="video-item"
       style={({ focused }) => [
         styles.itemContainer,
         focused && styles.focusedItem,

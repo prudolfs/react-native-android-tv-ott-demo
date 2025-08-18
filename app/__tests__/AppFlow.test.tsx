@@ -4,27 +4,18 @@ import HomeScreen from '@/app/index'
 import DetailsScreen from '@/app/details/[id]'
 import PlayerScreen from '@/app/player/[id]'
 import { renderWithQueryClient } from '@/utils/test-utils'
+import * as api from '@/services/api';
+import { catalogData } from '@/data/catalog';
 
-type RouterParams =
-  | {
-      pathname?: string
-      params?: Record<string, string>
-    }
-  | string
+jest.mock('@/services/api');
+const fetchCatalogMock = api.fetchCatalog as jest.Mock;
+fetchCatalogMock.mockResolvedValue(catalogData);
 
-const mockPush = jest.fn<void, [RouterParams]>()
-const mockNavigate = jest.fn<void, [RouterParams]>()
-const mockBack = jest.fn<void, []>()
 
+const mockPush = jest.fn<void, [unknown]>()
 jest.mock('expo-router', () => ({
-  useRouter: () => ({
-    push: (arg: RouterParams) => mockPush(arg),
-    navigate: (arg: RouterParams) => mockNavigate(arg),
-    back: () => mockBack(),
-  }),
-  useLocalSearchParams: () => ({
-    id: 'bbb-hls',
-  }),
+  useRouter: () => ({ push: mockPush, navigate: mockPush, back: jest.fn() }),
+  useLocalSearchParams: () => ({ id: 'bbb-hls' }),
 }))
 
 jest.mock('react-native-video', () => 'Video')
@@ -37,9 +28,7 @@ test('User can navigate from Home to Details screen', async () => {
     expect(videoItems.length).toBeGreaterThan(0)
   })
 
-  const firstVideo = getAllByTestId('video-item')[0]
-  fireEvent.press(firstVideo)
-
+  fireEvent.press(getAllByTestId('video-item')[0])
   expect(mockPush).toHaveBeenCalled()
 })
 
@@ -48,7 +37,7 @@ test('Details screen displays video information correctly', async () => {
 
   await waitFor(() => {
     expect(getByTestId('video-thumbnail')).toBeTruthy()
-    expect(getByText('Play')).toBeTruthy()
+    expect(getByText('▶ Play')).toBeTruthy()
   })
 })
 
@@ -56,11 +45,8 @@ test('User can navigate from Details to Player screen', async () => {
   const { getByText } = renderWithQueryClient(<DetailsScreen />)
 
   await waitFor(() => {
-    const playButton = getByText('Play')
-    expect(playButton).toBeTruthy()
-
+    const playButton = getByText('▶ Play')
     fireEvent.press(playButton)
-
     expect(mockPush).toHaveBeenCalled()
   })
 })
