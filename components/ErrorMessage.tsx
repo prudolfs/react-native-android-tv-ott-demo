@@ -2,14 +2,16 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 type ErrorMessageProps = {
+  testID?: string
   message?: string
 }
 
 export default function ErrorMessage({
+  testID = 'error-message',
   message = 'Something went wrong. Please try again.',
 }: ErrorMessageProps) {
   return (
-    <View style={styles.container} testID="error-message">
+    <View style={styles.container} testID={testID}>
       <Text style={styles.text}>{message}</Text>
     </View>
   )
