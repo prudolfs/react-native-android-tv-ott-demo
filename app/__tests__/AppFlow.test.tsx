@@ -5,14 +5,19 @@ import DetailsScreen from '../details/[id]'
 import PlayerScreen from '../player/[id]'
 import { renderWithQueryClient } from './test-utils'
 
-let mockPush = jest.fn()
-let mockNavigate = jest.fn()
-let mockBack = jest.fn()
+type RouterParams = {
+  pathname?: string;
+  params?: Record<string, string>;
+} | string;
+
+const mockPush = jest.fn<void, [RouterParams]>();
+const mockNavigate = jest.fn<void, [RouterParams]>();
+const mockBack = jest.fn<void, []>();
 
 jest.mock('expo-router', () => ({
   useRouter: () => ({
-    push: (...args) => mockPush(...args),
-    navigate: (...args) => mockNavigate(...args),
+    push: (arg: RouterParams) => mockPush(arg),
+    navigate: (arg: RouterParams) => mockNavigate(arg),
     back: () => mockBack(),
   }),
   useLocalSearchParams: () => ({
