@@ -15,7 +15,6 @@ export function renderWithQueryClient(
       },
     },
   })
-  
 
   if (preloadedData) {
     for (const key in preloadedData) {
@@ -23,5 +22,7 @@ export function renderWithQueryClient(
     }
   }
 
-  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>)
+  return render(
+    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>,
+  )
 }

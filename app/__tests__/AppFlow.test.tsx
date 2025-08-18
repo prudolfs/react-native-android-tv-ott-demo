@@ -4,13 +4,12 @@ import HomeScreen from '@/app/index'
 import DetailsScreen from '@/app/details/[id]'
 import PlayerScreen from '@/app/player/[id]'
 import { renderWithQueryClient } from '@/utils/test-utils'
-import * as api from '@/services/api';
-import { catalogData } from '@/data/catalog';
+import * as api from '@/services/api'
+import { catalogData } from '@/data/catalog'
 
-jest.mock('@/services/api');
-const fetchCatalogMock = api.fetchCatalog as jest.Mock;
-fetchCatalogMock.mockResolvedValue(catalogData);
-
+jest.mock('@/services/api')
+const fetchCatalogMock = api.fetchCatalog as jest.Mock
+fetchCatalogMock.mockResolvedValue(catalogData)
 
 const mockPush = jest.fn<void, [unknown]>()
 jest.mock('expo-router', () => ({

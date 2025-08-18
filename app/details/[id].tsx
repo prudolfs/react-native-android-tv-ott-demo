@@ -53,7 +53,11 @@ export default function DetailsScreen() {
       </Pressable>
 
       <View style={styles.content}>
-        <Image source={{ uri: video.thumbnail }} style={styles.thumbnail} testID="video-thumbnail" />
+        <Image
+          source={{ uri: video.thumbnail }}
+          style={styles.thumbnail}
+          testID="video-thumbnail"
+        />
 
         <View style={styles.infoContainer}>
           <Text style={styles.title}>{video.title}</Text>
